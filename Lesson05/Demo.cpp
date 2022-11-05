@@ -251,7 +251,7 @@ void Demo::Render() {
 	DrawColoredCubeWing1();
 	DrawColoredCubeWing2();
 	DrawColoredCubeBackWing();
-	
+	DrawColoredCubeBuilding();
 
 	glDisable(GL_DEPTH_TEST);
 }
@@ -553,6 +553,34 @@ void Demo::DrawColoredCubeBackWing()
 	glBindVertexArray(0);
 }
 
+
+void Demo::DrawColoredCubeBuilding()
+{
+
+	glUseProgram(shaderProgram);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glUniform1i(glGetUniformLocation(this->shaderProgram, "ourTexture"), 0);
+
+	glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(2 , 8, -30));
+	model = glm::scale(model, glm::vec3(40, 20, 20));
+
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindVertexArray(0);
+}
 int main(int argc, char** argv) {
 	RenderEngine& app = Demo();
 	app.Start("Transformation: Transform Cube", 800, 600, false, false);
