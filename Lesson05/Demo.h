@@ -40,6 +40,7 @@ private:
 	void DrawColoredCubeWing1();
 	void DrawColoredCubeWing2();
 	void DrawColoredCubeBackWing();
+	void DrawColoredCubeBuilding();
 	void BuildColoredPlane();
 	void DrawColoredPlane();
 };
